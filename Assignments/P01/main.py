@@ -1,11 +1,12 @@
 import json
 import random
 
+##returns a randon color for point marker
 def randColor():
   r = lambda: random.randint(0,255)
   return ('#%02X%02X%02X' % (r(),r(),r()))
 
-
+##creates a point on the map
 def makePoint(city, i):
   feature = {
     "type": "Feature",
@@ -29,6 +30,7 @@ def makePoint(city, i):
       feature['properties'][key] = val
 
   return feature
+
   
 
 # Change path as appropriate
@@ -87,12 +89,17 @@ for spot in lng:
         if states[item]['longitude'] == spot:
             points.append(states[item])
 
+##creates FeatureCollection for geoJson
 FeatureCollection = {
     "type" : "FeatureCollection",
     "features" : []
 }
+
+##iterates through points
 for i in range(len(points)):
+    ##adds a point for each index in points
     FeatureCollection["features"].append(makePoint(points[i], i))
+    ##adds lines between points
     if i != len(points) -1:
         FeatureCollection['features'].append(
             {
@@ -111,5 +118,6 @@ for i in range(len(points)):
             }
         )
 
+##opens geoJson file for writing
 with open("Path.geojson","w") as f:
   f.write(json.dumps(FeatureCollection))
