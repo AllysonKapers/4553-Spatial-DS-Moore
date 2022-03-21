@@ -9,7 +9,7 @@ from shapely.geometry import box, Polygon, LineString, Point
 ufos = [] 
 
 
-with open('cities.geojson') as f:
+with open("cities.geojson") as f:
     cities = json.load(f)
 
 
@@ -62,8 +62,6 @@ for i in range(len(geoCity)):
     #creates an array of the distances stored in dis
     dis = dis.values
     
-    
-    #print(dis)
 
     #loads all the distances values into distance array of city names and distance
     for j in range(len(dis)):
@@ -93,11 +91,11 @@ for i in range(len(geoCity)):
     #sorts distances from smallest to largest
     UFOdis = sort(UFOdis)
 
-    #creates a sub array for the closest 200 arrays to the city geoCity[i]
-    UFO200 = UFOdis[0:50]
+    #creates a sub array for the closest 100 arrays to the city geoCity[i]
+    UFO100 = UFOdis[0:100]
 
-    #calculates the average distance from geoCity[i] to the 200 closets sighting
-    avgUFOdis = mean(UFO200)
+    #calculates the average distance from geoCity[i] to the 100 closets sighting
+    avgUFOdis = mean(UFO100)
 
     cityUFO = {
         "city" : cityName[i],

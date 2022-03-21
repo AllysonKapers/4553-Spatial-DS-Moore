@@ -29,7 +29,7 @@
     },
     {
         "city": "Billings",
-        "average": 0.028714355041328896
+        "average": 0.2062699703331068
     },
     {
         "city": "Albuquerque",
@@ -41,7 +41,7 @@
     },
     {
         "city": "Cheyenne",
-        "average": 0.06754889344432755
+        "average": 0.35365182436057746
     },
     {
         "city": "Oklahoma City",
@@ -53,11 +53,11 @@
     },
     {
         "city": "Fargo",
-        "average": 0.15405811006232742
+        "average": 0.5319073622097071
     },
     {
         "city": "Sioux Falls",
-        "average": 0.008865799890373513
+        "average": 0.14043818206952488
     },
     {
         "city": "Omaha",
@@ -81,19 +81,19 @@
     },
     {
         "city": "Little Rock",
-        "average": 0.07211516482073844
+        "average": 0.08661630381595047
     },
     {
         "city": "Jackson",
-        "average": 0.08140791159640154
+        "average": 0.18465161465581403
     },
     {
         "city": "New Orleans",
-        "average": 0.016369065166345818
+        "average": 0.04083140558324726
     },
     {
         "city": "Memphis",
-        "average": 0.12150263285326797
+        "average": 0.12295343527384145
     },
     {
         "city": "Milwaukee",
@@ -105,7 +105,7 @@
     },
     {
         "city": "Birmingham",
-        "average": 0.045930728280873516
+        "average": 0.08381129260232993
     },
     {
         "city": "Indianapolis",
@@ -113,7 +113,7 @@
     },
     {
         "city": "Louisville/Jefferson County",
-        "average": 0.07888700150918423
+        "average": 0.07980647393612163
     },
     {
         "city": "Atlanta",
@@ -121,7 +121,7 @@
     },
     {
         "city": "Detroit",
-        "average": 0.07095874668818368
+        "average": 0.07277195941261018
     },
     {
         "city": "Columbus",
@@ -133,11 +133,11 @@
     },
     {
         "city": "Charleston",
-        "average": 0.057458079127463056
+        "average": 0.19548224550901533
     },
     {
         "city": "Columbia",
-        "average": 0.05067638829763025
+        "average": 0.09107603894375649
     },
     {
         "city": "Charlotte",
@@ -157,7 +157,7 @@
     },
     {
         "city": "Wilmington",
-        "average": 0.028688897979561555
+        "average": 0.09151471765069565
     },
     {
         "city": "Philadelphia",
@@ -165,7 +165,7 @@
     },
     {
         "city": "Newark",
-        "average": 0.02247935733299988
+        "average": 0.05096701444106973
     },
     {
         "city": "New York",
@@ -173,26 +173,26 @@
     },
     {
         "city": "Burlington",
-        "average": 0.03258620664012443
+        "average": 0.10340948795844163
     },
     {
         "city": "Bridgeport",
-        "average": 0.015876261085893694
+        "average": 0.04527281099992455
     },
     {
         "city": "Manchester",
-        "average": 0.023864320914434276
+        "average": 0.07099524500239247
     },
     {
         "city": "Providence",
-        "average": 0.008862397486279615
+        "average": 0.03378617692525499
     },
     {
         "city": "Boston",
-        "average": 0.0196182058648419
+        "average": 0.0203212750534969
     },
     {
         "city": "Portland",
-        "average": 0.03814151078475408
+        "average": 0.0920724912061086
     }
 ]
