@@ -1,11 +1,11 @@
 import json
 import random
-
+## returns a random color
 def randColor():
   r = lambda: random.randint(0,255)
   return ('#%02X%02X%02X' % (r(),r(),r()))
 
-
+##function to make a point
 def makePoint(city, i):
   feature = {
     "type": "Feature",
@@ -32,12 +32,11 @@ def makePoint(city, i):
   
 
 # Change path as appropriate
-with open("/Users/AllyMoore/Documents/GitHub/4553-Spatial-DS/Resources/01_Data/cities_latlon_w_pop.json") as f:
+with open('cities_latlon_w_pop.json') as f:
   data = json.load(f)
 
 #will hold an value for each state without duplicates
 states = {}
-
 
 #iterates through the entire json file
 for item in data:
@@ -87,20 +86,26 @@ for spot in lng:
         if states[item]['longitude'] == spot:
             points.append(states[item])
 
+##creates Feature Collection for geoJson file
 FeatureCollection = {
     "type" : "FeatureCollection",
     "features" : []
 }
+##interates through points list
 for i in range(len(points)):
+    ##uses makePoint function to add points to Feature Collection
     FeatureCollection["features"].append(makePoint(points[i], i))
+    ##'draws' lines between points to create a path through the points
     if i != len(points) -1:
         FeatureCollection['features'].append(
             {
                 "type":"Feature",
+                ##controls line properties
                 "properties":{
                     "lineColor": '#000000',
                     "LineWidth" : 3
                 },
+                ##draws a line between coordinates
                 "geometry": {
                     "type": "LineString",
                     "coordinates": [
@@ -110,6 +115,6 @@ for i in range(len(points)):
                 }
             }
         )
-
+##opens output file and writes Feature Collection to it 
 with open("Path.geojson","w") as f:
   f.write(json.dumps(FeatureCollection))
