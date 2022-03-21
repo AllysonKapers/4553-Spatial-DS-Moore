@@ -1,0 +1,198 @@
+[
+    {
+        "city": "Portland",
+        "average": 0.016859891035451387
+    },
+    {
+        "city": "Seattle",
+        "average": 0.006675660533517651
+    },
+    {
+        "city": "Los Angeles",
+        "average": 0.036282210771418126
+    },
+    {
+        "city": "Boise City",
+        "average": 0.030371943174118236
+    },
+    {
+        "city": "Las Vegas",
+        "average": 0.05486425227943442
+    },
+    {
+        "city": "Phoenix",
+        "average": 0.09040822278573356
+    },
+    {
+        "city": "Salt Lake City",
+        "average": 0.0570143648794637
+    },
+    {
+        "city": "Billings",
+        "average": 0.028714355041328896
+    },
+    {
+        "city": "Albuquerque",
+        "average": 0.01942261373417965
+    },
+    {
+        "city": "Denver",
+        "average": 0.03146139420735259
+    },
+    {
+        "city": "Cheyenne",
+        "average": 0.06754889344432755
+    },
+    {
+        "city": "Oklahoma City",
+        "average": 0.010771756748221947
+    },
+    {
+        "city": "Wichita",
+        "average": 0.009977950199569742
+    },
+    {
+        "city": "Fargo",
+        "average": 0.15405811006232742
+    },
+    {
+        "city": "Sioux Falls",
+        "average": 0.008865799890373513
+    },
+    {
+        "city": "Omaha",
+        "average": 0.06688616859900533
+    },
+    {
+        "city": "Houston",
+        "average": 0.08318697633982684
+    },
+    {
+        "city": "Kansas City",
+        "average": 0.014131223314225169
+    },
+    {
+        "city": "Des Moines",
+        "average": 0.009838337347220357
+    },
+    {
+        "city": "Minneapolis",
+        "average": 0.02845867728592777
+    },
+    {
+        "city": "Little Rock",
+        "average": 0.07211516482073844
+    },
+    {
+        "city": "Jackson",
+        "average": 0.08140791159640154
+    },
+    {
+        "city": "New Orleans",
+        "average": 0.016369065166345818
+    },
+    {
+        "city": "Memphis",
+        "average": 0.12150263285326797
+    },
+    {
+        "city": "Milwaukee",
+        "average": 0.05503082803716136
+    },
+    {
+        "city": "Chicago",
+        "average": 0.03826224348034599
+    },
+    {
+        "city": "Birmingham",
+        "average": 0.045930728280873516
+    },
+    {
+        "city": "Indianapolis",
+        "average": 0.04232711894746972
+    },
+    {
+        "city": "Louisville/Jefferson County",
+        "average": 0.07888700150918423
+    },
+    {
+        "city": "Atlanta",
+        "average": 0.059740747545483336
+    },
+    {
+        "city": "Detroit",
+        "average": 0.07095874668818368
+    },
+    {
+        "city": "Columbus",
+        "average": 0.04224476120284712
+    },
+    {
+        "city": "Jacksonville",
+        "average": 0.07618506313069504
+    },
+    {
+        "city": "Charleston",
+        "average": 0.057458079127463056
+    },
+    {
+        "city": "Columbia",
+        "average": 0.05067638829763025
+    },
+    {
+        "city": "Charlotte",
+        "average": 0.027077213726077694
+    },
+    {
+        "city": "Washington",
+        "average": 0.011878314807561246
+    },
+    {
+        "city": "Baltimore",
+        "average": 0.022690661945180282
+    },
+    {
+        "city": "Virginia Beach",
+        "average": 0.08540456524495703
+    },
+    {
+        "city": "Wilmington",
+        "average": 0.028688897979561555
+    },
+    {
+        "city": "Philadelphia",
+        "average": 0.0427205987210258
+    },
+    {
+        "city": "Newark",
+        "average": 0.02247935733299988
+    },
+    {
+        "city": "New York",
+        "average": 0.03640803765676317
+    },
+    {
+        "city": "Burlington",
+        "average": 0.03258620664012443
+    },
+    {
+        "city": "Bridgeport",
+        "average": 0.015876261085893694
+    },
+    {
+        "city": "Manchester",
+        "average": 0.023864320914434276
+    },
+    {
+        "city": "Providence",
+        "average": 0.008862397486279615
+    },
+    {
+        "city": "Boston",
+        "average": 0.0196182058648419
+    },
+    {
+        "city": "Portland",
+        "average": 0.03814151078475408
+    }
+]
