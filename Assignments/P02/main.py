@@ -110,11 +110,3 @@ with open("CityDistance.json", "w") as f:
 
 with open("UFOavg.json", "w") as f:
     f.write(json.dumps(outputUFO, indent=4))
-
-
-
-
-
-
-
-
