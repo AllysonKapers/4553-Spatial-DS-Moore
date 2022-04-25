@@ -79,13 +79,10 @@ class WorldleHelper:
 
         return poly
 
-    def haversineDistance(self, point1, point2, units="miles"):
+    def haversineDistance(self, lon1, lat1, lon2, lat2, units="miles"):
         
         radius = {"km": 6371, "miles": 3956}
-        lon1 = point1.x
-        lat1 = point1.y
-        lon2 = point2.x
-        lat2 = point2.y
+        
         # convert decimal degrees to radians
         lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
 
@@ -120,10 +117,37 @@ class WorldleHelper:
                     min = distance
                     point1 = p1
                     point2 = p2
+
+        lon1 = point1.x
+        lat1 = point1.y
+        lon2 = point2.x
+        lat2 = point2.y
         #calculates the distance in miles and returns
-        distMiles = self.haversineDistance(point1, point2)
+        distMiles = self.haversineDistance(lon1, lat1, lon2, lat2)
         distMiles = round(distMiles, 3)
         return distMiles
+
+    def compass_bearing(self, pointA, pointB):
+        if(type(pointA)!= tuple) or (type(pointB)!=tuple):
+             raise TypeError("Only tuples are supported as arguments")
+        
+        lat1 = radians(pointA[0])
+        lat2 = radians(pointB[0])
+
+        diffLong = radians(pointB[1] - pointA[1])
+
+        x = sin(diffLong) * cos(lat2)
+        y = cos(lat1) * sin(lat2) - (sin(lat1) * cos(lat2) * cos(diffLong))
+
+        initial_bearing = atan2(x, y)
+
+        # Now we have the initial bearing but math.atan2 return values
+        # from -180° to + 180° which is not what we want for a compass bearing
+        # The solution is to normalize the initial bearing as shown below
+        initial_bearing = degrees(initial_bearing)
+        compass_bearing = (initial_bearing + 360) % 360
+
+        return compass_bearing
 
 
 ##test
