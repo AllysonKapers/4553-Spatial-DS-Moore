@@ -8,24 +8,29 @@ from shapely.geometry import Polygon
 import numpy as np
 import geopandas as gps
 import json
+import os
+import sys
+from rich import print
 
 
 ## will need functions to:
 #  [x]to open needed files 
 #  [x]get the polygon of a given country
-#  []find the distance between 2 countries
-#  []output data
+#  [x]find the distance between 2 countries
 #  [x]handle a multipolygon to get the largest land mass of a country for calculations
 #  [x]find selected country
 #  [x]get center point 
 #  [x]reduce the number of points in a polygon
-#  [] calculate bearing
-class WorldleHelper:
+#  [x] calculate bearing
+#  []format output(separate class)
+class SpatialMethods:
     #constructor: opens files needed
     def __init__(self):
         with open("continents.json") as f:
-            self.__globe = json.load(f)
-        self.__output = open("output.geojson", 'w')
+            self.__continents = json.load(f)
+        with open("continents.geojson") as f:
+            self.__countries = json.load(f)
+        self.output = open("output.geojson", 'w')
     
     #finds largest polygon of a given country after passing a multipolygon
     def __single(self, mpoly):
@@ -47,23 +52,42 @@ class WorldleHelper:
 
     #finds the desired country from the json file  
     def __countDict(self, country):
-        for continent in self.__globe:
-            for countries in self.__globe[continent]:
+        for continent in self.__continents:
+            for countries in self.__continents[continent]:
                 if countries['properties']["name"].lower() == country.lower():
                     return countries
 
+    #consolodates country names
+    def countryList(self):
+        countList = []
+        for continents in self.__continents:
+            for countries in self.__continents[continents]:
+                countList.append(countries['properties']['name'])
+        return countList
 
+    #returns the continent of a given country
+    def getContinent(self, country):
+        for continents in self.__continents:
+            for countries in self.__continents:
+                if country.lower() == countries['properties']['name'].lower():
+                    return continents
 
-    #gets polygon of a given country
-    def getPolygon(self, country):
+    def displayPoly(self, country):
         country = self.__countDict(country)
         multipoly = country['geometry']['coordinates']
-        #gets the largest polygon from the multippolygon
+        
+
+        return multipoly
+        
+    #gets polygon of a given country
+    def getPolygon(self, country):
+        count = self.__countDict(country)
+        multipoly = count['geometry']['coordinates']
         poly = self.__single(multipoly)
 
         return poly
 
-    #gets the centerpoint of a polygon 
+    #gets the center point of a polygon 
     def getCenter(self, poly):
         gseries = gps.GeoSeries(Polygon(poly))
         center = [gseries.centroid[0].x, gseries.centroid[0].y]
@@ -79,6 +103,10 @@ class WorldleHelper:
 
         return poly
 
+<<<<<<< HEAD:Assignments/P04/WordleHelper.py
+=======
+    #calculate the distance between two points in miles
+>>>>>>> d6d67e8a0d2fd34ac3d38e518c3a42129a1cd17f:Assignments/P04/WorldleHelper.py
     def haversineDistance(self, lon1, lat1, lon2, lat2, units="miles"):
         
         radius = {"km": 6371, "miles": 3956}
@@ -102,6 +130,7 @@ class WorldleHelper:
     #the distance of neighboring countries to be zero, but i didnt test all neighboring countries
     #*most accurate would be to use an algorithm to calculate the distance to a line 
     def distancePoints(self, poly1, poly2):
+        #gets the largest polygon from the multippolygon
         series1 = gps.GeoSeries(gps.points_from_xy([x[0] for x in poly1], [y[1] for y in poly1]))
         series2 = gps.GeoSeries(gps.points_from_xy([x[0] for x in poly2], [y[1] for y in poly2]))
         
@@ -127,6 +156,10 @@ class WorldleHelper:
         distMiles = round(distMiles, 3)
         return distMiles
 
+<<<<<<< HEAD:Assignments/P04/WordleHelper.py
+=======
+    ##calculates the compass bearing for the line between two points
+>>>>>>> d6d67e8a0d2fd34ac3d38e518c3a42129a1cd17f:Assignments/P04/WorldleHelper.py
     def compass_bearing(self, pointA, pointB):
         if(type(pointA)!= tuple) or (type(pointB)!=tuple):
              raise TypeError("Only tuples are supported as arguments")
@@ -148,33 +181,44 @@ class WorldleHelper:
         compass_bearing = (initial_bearing + 360) % 360
 
         return compass_bearing
+<<<<<<< HEAD:Assignments/P04/WordleHelper.py
+
+=======
+>>>>>>> d6d67e8a0d2fd34ac3d38e518c3a42129a1cd17f:Assignments/P04/WorldleHelper.py
 
 
-##test
+    
 
+
+#test
 
 ## value returned is 8041.196 and the 
 # capital to capital distance for closest estimate is 8185
 if __name__ == "__main__":
-    w = WorldleHelper()
+    w = SpatialMethods()
 
     p1 = w.reducePoints('Afghanistan', .1)
     p2 = w.reducePoints('Aruba', .1)
-
+    list = w.countryList()
     print(w.distancePoints(p1, p2))
+    print(list[1])
+    l = len(list)
+    print(list[l-1])
 #returns distance of zero
-if __name__ == "__main__":
-    w = WorldleHelper()
+# if __name__ == "__main__":
+#     w = SpatialMethods()
+   
 
-    p1 = w.reducePoints('United States', .1)
-    p2 = w.reducePoints('Mexico', .1)
 
-    print(w.distancePoints(p1, p2))
+#     p1 = w.reducePoints('United States', .1)
+#     p2 = w.reducePoints('Mexico', .1)
+
+#     print(w.distancePoints(p1, p2))
 #returns distance of 0
-if __name__ == "__main__":
-    w = WorldleHelper()
+# if __name__ == "__main__":
+#     w = SpatialMethods()
 
-    p1 = w.reducePoints('United States', .1)
-    p2 = w.reducePoints('Canada', .1)
+#     p1 = w.reducePoints('United States', .1)
+#     p2 = w.reducePoints('Canada', .1)
 
-    print(w.distancePoints(p1, p2))
+#     print(w.distancePoints(p1, p2))
