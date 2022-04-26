@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Worldle Game</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+    <style>
+        html, 
+        body 
+        {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #map 
+        {
+            width: 60%;
+            height: 100%;
+            float: left;
+        }
+        
+        #text 
+        {
+            height: 100%;
+            width: 40%;
+            float: right;
+        }
+        
+        #geojsontext 
+        {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            width: 90%;
+            height: 80%;
+        }
+        
+        #submit 
+        {
+            margin: 20px;
+        }
+        
+        ul 
+        {
+            display: flex;   
+            width: 100%;     
+            flex-wrap: wrap; 
+        }
+        li 
+        {
+            flex: 0 0 33.33%;
+        }
+        
+    </style>
+
+  </head>
+
+  <body>
+    <div id="map"></div>
+    <h1>Welcome to Worldle</h1>
+        <p> -Select a country and hit submit<br>
+            -The direction will tell you what direction the correct country is in<br>
+            -If you guess correctly, the color of the country will turn green<br><br>
+                -The lighter the color the farther you are from the country. <br>
+                 Dark blue is close, light blue is far away</p>
+
+    <div id="text">
+      <label for="country">Choose a Country:</label>
+
+      <select name="country" id="country"></select>
+
+      <input type="button" id="submit" value="Submit"/>
+
+      <br>
+      <label for="dir">Cardinal Direction:</label>
+      <p id="dir" style="display:inline"></p>
+      <br>
+
+      <br>
+      <label for="guesses">Guesses by proximity to correct country:</label>
+      <ul id = "guesses"></ul>
+    </div>
+
+    
+    <script>
+
+        window.onload = function () {
+            loadCountryList();
+        };
+        let bound = [[[90, 180], [-90, -180]]]
+
+        let map = L.map("map", {maxBounds: bound, maxBoundsViscosity: 1.0}).setView([0, 0], 0);
+
+        map.setMinZoom(3)
+        map.setMaxZoom(8)
+
+        L.tileLayer(
+            "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png",
+            {
+                attribution:
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attribution/">CartoDB</a>',
+                subdomains: "abcd",
+                maxZoom: 19,
+            }
+        ).addTo(map);
+
+        
+        let layers = L.layerGroup().addTo(map);
+
+        document.getElementById("submit").addEventListener("click", DisplayPoly);
+        let correct = null 
+        var guesses = []// initializes empty list for guesses
+    
+        blues = ['#CCE5FF','#99CCFF','#66B2FF','#3399FF','#0080FF','#0066CC','#004C99','#003366','#001933']
+                                                                                       
+        function loadCountryList() 
+        {
+            //initialize call to get the list of countrys for dropdown
+            let url = "http://127.0.0.1:8080/countries/";
+            fetch(url)
+                .then(function (response) 
+                {
+                    return response.json();
+                })
+                .then(function (data) 
+                {
+                    var CountList = document.getElementById("country");
+
+                    names = data['countries'].sort();
+
+                    CountList.innerHTML = "";
+
+                    for (var i = 0; i < names.length; i++)
+                    {
+                        var option = data['countries'][i];
+                        var dropdown = document.createElement("option");
+                        dropdown.textContent = option;
+                        dropdown.value = option;
+                        CountList.appendChild(dropdown);
+                    }
+
+                    correct = names[Math.floor(Math.random() * names.length)]
+                });
+        }
+                                                                                                                          
+        function DisplayPoly()
+        {
+            var j = document.getElementById("country");
+            var name = j.options[j.selectedIndex].text;
+            var polyColor = null
+            
+
+            if(name == correct)
+            {
+                polyColor = '#00FF00'
+                document.getElementById("country").disabled = true;
+                document.getElementById("submit").disabled = true;
+                guesses.push([name, 0])
+                
+            }
+            else
+            {
+                
+                fetch('http://127.0.0.1:8080/distance/' + name + '/' + correct)
+                .then(function (response) 
+                {
+                    return response.json();
+                })
+                .then(function (data) 
+                {
+                    dis = Math.floor(data['distance'])
+                    console.log(data)
+                    console.log(dis)
+
+                    if(dis < 100)
+                    {
+                        if(dis < 1)
+                        {
+                            dis = 1   
+                        }
+                        polyColor = blues[8]
+                    }
+                    else if(dis < 250)
+                    {
+                        polyColor = blues[7]
+                    }
+                    else if(dis < 500)
+                    {
+                        polyColor = blues[6]
+                    }
+                    else if(dis < 750)
+                    {
+                        polyColor = blues[5]
+                    }
+                    else if(dis < 1000)
+                    {
+                        polyColor = blues[4]
+                    }
+                    else if(dis < 2000)
+                    {
+                        polyColor = blues[3]
+                    }
+                    else if(dis < 3000)
+                    {
+                        polyColor = blues[2]
+                    }
+                    else if(dis < 5000)
+                    {
+                        polyColor = blues[1]
+                    }
+                    else
+                    {
+                        polyColor = blues[0]
+                    }
+                
+                    guesses.push([name, dis])
+                });
+
+                                                                               
+                
+                fetch('http://127.0.0.1:8080/cardinal/' + name + '/' + correct)
+                .then(function (response) 
+                {
+                    return response.json();
+                })
+                .then(function (data)
+                {   
+                    let text = NULL
+                    
+                    if(data['direction'] == 'N')
+                    {
+                        text = ' ⬆️ '
+                    }
+                    else if(data['direction'] == 'E')
+                    {
+                        text = ' ➡️ '
+                    }
+                    else if(data['direction'] == 'S')
+                    {
+                        text = ' ⬇️ '
+                    }
+                    else if(data['direction'] == 'W')
+                    {
+                        text = ' ⬅️ '
+                    }
+                    else if(data['direction'] == 'SW')
+                    {
+                        text = ' ↙️ '
+                    }
+                    else if(data['direction'] == 'NW')
+                    {
+                        text = ' ↖️ '
+                    }
+                    else if(data['direction'] == 'SE')
+                    {
+                        text = '↘️'
+                    }
+                    else 
+                    {
+                        text = '↗️'
+                    }
+                    
+                    document.getElementById("dir").textContent = text;
+                });
+            }
+
+                                                                                                                                
+            let url = "http://127.0.0.1:8080/country/" + name; 
+
+            fetch(url)
+                .then(function (response) 
+                {
+                    return response.json();
+                })
+                .then(function (data)
+                {   result = {
+                        "type": "FeatureCollection",
+                        "features": [
+                            {
+                                "type": "Feature",
+                                "properties": {},
+                                "geometry": {
+                                    "type": "Polygon",
+                                    "coordinates": [data['polygon']]
+                                }
+                            }
+                        ]
+                    };
+                    
+                    let defaultStyle = 
+                    {
+                        fillColor: polyColor,
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 1
+                    }
+
+                    
+                    L.geoJSON(result, {style: defaultStyle}).addTo(layers);
+                    
+                    guesses.sort(([a, b], [c, d]) => b - d);
+                    
+                    document.getElementById("guesses").innerHTML = "";
+                    
+
+                    for(i = 0; i < guesses.length; i++)
+                    {
+                        var CountList = document.getElementById("guesses");
+                        var dropdown = document.createElement("li");
+                        dropdown.textContent = guesses[i][0] + ' ' + guesses[i][1] + ' ' + 'mile(s)'
+                        dropdown.value = guesses[i][0];
+                        CountList.appendChild(dropdown);
+                    }
+                    
+                    selectbox = document.getElementById("country")
+                    
+                    for(var i=0; i < selectbox.options.length; i++)
+                    {
+                        if(selectbox.options[i].selected)
+                        {
+                            selectbox.remove(i);
+                        }
+                    }
+                });
+        }
+        
+        
+    </script>
+</body>
+
+</html>
